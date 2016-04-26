@@ -1,6 +1,5 @@
- 
-#include "io_softcore.h"
 #include "rover.h"
 
 int main(){
+    init_QTR_driver();
 }
