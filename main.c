@@ -9,21 +9,20 @@ int main(){
     solveMaze();
 }
 
-int solveMaze(unsigned char previousState) {
+void solveMaze(unsigned char previousState) {
     unsigned char currentState = getSensorData();
 
-    if(isLeftTurnAvailable() == 1) {
+    if(isLeftTurnAvailable(currentState) == 1) {
         turn(-1);
-    } else if(isOnPath() == 1) {
+    } else if(isOnPath(currentState) == 1) {
         driveForward();
-    } else if(isRightTurnAvailable() == 1) {
+    } else if(isRightTurnAvailable(currentState) == 1) {
         turn(1);
-    } else if(isTooFarLeft() == 1) {
+    } else if(isTooFarLeft(currentState) == 1) {
         drift(1);
-    } else if(isTooFarRight() == 1) {
+    } else if(isTooFarRight(currentState) == 1) {
         drift(-1);
-    } else if(isOffOfPath() == 1) {
-        turn(1);
+    } else if(isOffOfPath(currentState) == 1) {
         turn(1);
     }
 
