@@ -2,32 +2,26 @@ unsigned char getSensorData() {
     return get_QTR_value();
 }
 
-int lookForTurn(unsigned char readings[2]) {
-
+int isLeftTurnAvailable(unsigned char sensorData) {
+    return ((sensorData & 0xC0) >> 6) == 3;
 }
 
-int lookForCurve(unsigned char last_state, unsigned char next_state) {
-    if(last_state < next_state) {
-        // Curve?
-    } else if(last_state > next_state) {
-        // Curve?
-    }
+int isRightTurnAvailable(unsigned char sensorData) {
+    return (sensorData & 0x03) == 3;
 }
 
-int lookForTee(unsigned char reading) {
-    if(reading == 0xFF) {
-
-    }
+int isOnPath(unsigned char sensorData) {
+    return ((sensorData & 0x3C) >> 2) == 0x0F;
 }
 
-int lookForDeadEnd(unsigned char readings[2]) {
-
+int isTooFarLeft(unsigned char sensorData) {
+    return ((sensorData & 0x0F) << 4 | (sensorData & 0xF0) >> 4) > sensorData;
 }
 
-int lookForIntersection(unsigned char readings[2]) {
-
+int isTooFarRight(unsigned char sensorData) {
+    return ((sensorData & 0x0F) << 4 | (sensorData & 0xF0) >> 4) < sensorData;
 }
 
-int isThreeOrFourWayIntersection() {
-
+int isOffOfPath(unsigned char sensorData) {
+    return sensorData == 0x00;
 }

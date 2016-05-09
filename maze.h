@@ -1,8 +1,0 @@
-#define TILE_INTERSECTION 0
-#define TILE_TEE 1
-#define TILE_TURN 2
-#define TILE_STRAIGHT 3
-#define TILE_DEADEND 4
-#define TILE_BLANK 5
-#define TILE_FINISH 6
-#define TILE_CURVE 7

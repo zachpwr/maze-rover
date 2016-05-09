@@ -4,6 +4,31 @@
 #include <math.h>
 
 // -- HIGH-LEVEL MOTOR I/O -- //
+void drift(int direction) {
+    int leftDirection = (direction < 0) ? BREAK : FORWARD; // Dictates left/right turn depending on sign of input value
+    int rightDirection = (direction < 0) ? FORWARD : BREAK;
+
+    setLeftMotor(leftDirection);
+    setRightMotor(rightDirection);
+
+    int finalTurns = 10;
+    int currentTurns = 0;
+
+    int lastState = (direction < 0) ? getRightEncoderState() : getLeftEncoderState();
+
+    while(currentTurns < finalTurns) {
+        int currentState = (direction < 0) ? getRightEncoderState() : getLeftEncoderState();
+
+        if(currentState != lastState) {
+            currentTurns += 1;
+            lastState = currentState;
+        }
+    }
+
+    stop();
+    return;
+}
+
 void turn(int direction) {
 
     int finalTurns = (11 / 2) * 83.333;
@@ -13,10 +38,10 @@ void turn(int direction) {
     int lastLeftState = getLeftEncoderState();
     int lastRightState = getRightEncoderState();
 
-    int leftDirection = (direction < 0) ? FORWARD : BACKWARD;//Dictates left/right turn depending on sign of input value
-    int rightDirection = (direction < 0) ? BACKWARD : FORWARD;
+    int leftDirection = (direction > 0) ? FORWARD : BACKWARD; // Dictates left/right turn depending on sign of input value
+    int rightDirection = (direction > 0) ? BACKWARD : FORWARD;
 
-    while(rightTurns < finalTurns || rightTurns < finalTurns) {//While loop that continues until rover has completed 90degree turn
+    while(rightTurns < finalTurns || rightTurns < finalTurns) { // While loop that continues until rover has completed 90degree turn
         int currentLeftState = getLeftEncoderState();
         int currentRightState = getRightEncoderState();
 
@@ -33,7 +58,7 @@ void turn(int direction) {
         if(rightTurns < leftTurns) {
             setRightMotor(rightDirection);
             setLeftMotor(BREAK);
-        } else if(rightTurns < leftTurns){
+        } else if(rightTurns < leftTurns) {
             setRightMotor(BREAK);
             setLeftMotor(leftDirection);
         } else {
@@ -93,7 +118,7 @@ int stop() {//Makes rover stop moving
 }
 
 // -- LOW-LEVEL MOTOR I/O -- //
-int setLeftMotor(int direction) {//Gives access to the left motor
+int setLeftMotor(int direction) { // Gives access to the left motor
     static int currentDirection;
     if(currentDirection == direction) return 0;
 
@@ -104,7 +129,7 @@ int setLeftMotor(int direction) {//Gives access to the left motor
     return 1;
 }
 
-int setRightMotor(int direction) {//Gives access to the right motor
+int setRightMotor(int direction) { // Gives access to the right motor
     static int currentDirection;
     if(currentDirection == direction) return 0;
 
@@ -116,10 +141,10 @@ int setRightMotor(int direction) {//Gives access to the right motor
 }
 
 // -- ENCODER I/O -- //
-int getLeftEncoderState() {//Gives access to the left encoder
+int getLeftEncoderState() { // Gives access to the left encoder
     return LEFT_PORT_IN & LEFT_ENCODER_MASK;
 }
 
-int getRightEncoderState() {//Gives access to the right encoder 
+int getRightEncoderState() { // Gives access to the right encoder
     return LEFT_PORT_IN & RIGHT_ENCODER_MASK;
 }
