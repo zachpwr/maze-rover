@@ -78,7 +78,7 @@ void turn(int direction) {
     int leftDirection = (direction > 0) ? FORWARD : BACKWARD; // Dictates left/right turn depending on sign of input value
     int rightDirection = (direction > 0) ? BACKWARD : FORWARD;
 
-    while(!isOnPath()) { // While loop that continues until rover has completed 90degree turn
+    while(!isOnPath(getSensorData())) { // While loop that continues until rover has completed 90degree turn
         setRightMotor(rightDirection);
         setLeftMotor(leftDirection);
         _delay_ms(10);
@@ -100,6 +100,7 @@ void driveForward() {
 int stop() {//Makes rover stop moving
     setLeftMotor(BREAK);
     setRightMotor(BREAK);
+    return 0;
 }
 
 // -- LOW-LEVEL MOTOR I/O -- //
