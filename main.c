@@ -1,7 +1,8 @@
-#define F_CPU 1000000UL
 #include <avr/io.h>
-#include <util/delay.h>
 #include "rover.h"
+#include "sensor.h"
+#include "motor.h"
+#include "qtr_driver.h"
 
 int main(){
     init_QTR_driver();
@@ -14,7 +15,7 @@ int solveMaze(unsigned char previousState) {
     if(isLeftTurnAvailable() == 1) {
         turn(-1);
     } else if(isOnPath() == 1) {
-        driveForward(0.1);
+        driveForward();
     } else if(isRightTurnAvailable() == 1) {
         turn(1);
     } else if(isTooFarLeft() == 1) {

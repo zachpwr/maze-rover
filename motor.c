@@ -1,7 +1,5 @@
-#include "io_softcore.h"
 #include "rover.h"
 #include "motor.h"
-#include <math.h>
 
 // -- HIGH-LEVEL MOTOR I/O -- //
 void drift(int direction) {
@@ -11,103 +9,31 @@ void drift(int direction) {
     setLeftMotor(leftDirection);
     setRightMotor(rightDirection);
 
-    int finalTurns = 10;
-    int currentTurns = 0;
-
-    int lastState = (direction < 0) ? getRightEncoderState() : getLeftEncoderState();
-
-    while(currentTurns < finalTurns) {
-        int currentState = (direction < 0) ? getRightEncoderState() : getLeftEncoderState();
-
-        if(currentState != lastState) {
-            currentTurns += 1;
-            lastState = currentState;
-        }
-    }
+    _delay_ms(50);
 
     stop();
     return;
 }
 
 void turn(int direction) {
-
-    int finalTurns = (11 / 2) * 83.333;
-    int rightTurns = 0;
-    int leftTurns = 0;
-
-    int lastLeftState = getLeftEncoderState();
-    int lastRightState = getRightEncoderState();
-
     int leftDirection = (direction > 0) ? FORWARD : BACKWARD; // Dictates left/right turn depending on sign of input value
     int rightDirection = (direction > 0) ? BACKWARD : FORWARD;
 
-    while(rightTurns < finalTurns || rightTurns < finalTurns) { // While loop that continues until rover has completed 90degree turn
-        int currentLeftState = getLeftEncoderState();
-        int currentRightState = getRightEncoderState();
-
-        if(currentLeftState != lastLeftState) {
-            leftTurns += 1;
-            lastLeftState = currentLeftState;
-        }
-
-        if(currentRightState != lastRightState) {
-            rightTurns += 1;
-            lastRightState = currentRightState;
-        }
-
-        if(rightTurns < leftTurns) {
-            setRightMotor(rightDirection);
-            setLeftMotor(BREAK);
-        } else if(rightTurns < leftTurns) {
-            setRightMotor(BREAK);
-            setLeftMotor(leftDirection);
-        } else {
-            setRightMotor(rightDirection);
-            setLeftMotor(leftDirection);
-        }
+    while(!isOnPath()) { // While loop that continues until rover has completed 90degree turn
+        setRightMotor(rightDirection);
+        setLeftMotor(leftDirection);
+        _delay_ms(10);
     }
 
     stop();
     return;
 }
 
-void driveForward(float displacement) {
-    int leftTurns = 0;
-    int rightTurns = 0;
+void driveForward() {
+    setRightMotor(FORWARD);
+    setLeftMotor(FORWARD);
+    _delay_ms(10);
 
-    int lastLeftState = getLeftEncoderState();
-    int lastRightState = getRightEncoderState();
-
-    int direction = (displacement > 0) ? FORWARD : BACKWARD;
-
-    displacement = sqrt(displacement * displacement);
-    LEDS = displacement;
-
-    while(((leftTurns/83.333) * 2) < displacement || ((rightTurns/83.333) * 2) < displacement) {//Makes both mothors turn until they have reached the desired displacement
-        int currentLeftState = getLeftEncoderState();
-        int currentRightState = getRightEncoderState();
-
-        if(currentLeftState != lastLeftState) {
-            leftTurns += 1;
-            lastLeftState = currentLeftState;
-        }
-
-        if(currentRightState != lastRightState) {
-            rightTurns += 1;
-            lastRightState = currentRightState;
-        }
-
-        if(leftTurns < rightTurns) {//Statements to prevent drifting to one side
-            setLeftMotor(direction);
-            setRightMotor(BREAK);
-        } else if(rightTurns < leftTurns) {
-            setLeftMotor(BREAK);
-            setRightMotor(direction);
-        } else {
-            setLeftMotor(direction);
-            setRightMotor(direction);
-        }
-    }
     stop();
     return;
 }
@@ -138,13 +64,4 @@ int setRightMotor(int direction) { // Gives access to the right motor
 
     currentDirection = direction;
     return 1;
-}
-
-// -- ENCODER I/O -- //
-int getLeftEncoderState() { // Gives access to the left encoder
-    return LEFT_PORT_IN & LEFT_ENCODER_MASK;
-}
-
-int getRightEncoderState() { // Gives access to the right encoder
-    return LEFT_PORT_IN & RIGHT_ENCODER_MASK;
 }

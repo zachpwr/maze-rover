@@ -1,3 +1,6 @@
+#include "qtr_driver.h"
+#include "sensor.h"
+
 unsigned char getSensorData() {
     return get_QTR_value();
 }
