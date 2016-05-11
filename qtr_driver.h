@@ -13,9 +13,9 @@
 #include <avr/interrupt.h>
 
 //Change these to match the I/O port the QTR is on
-#define PORT_QTR PORTD
-#define DDR_QTR  DDRD
-#define PIN_QTR  PIND
+#define PORT_QTR PORTC
+#define DDR_QTR  DDRC
+#define PIN_QTR  PINC
 
 //Define the charge and discharge times
 #define QTR_CHARGE_TIME 1   //charge time in whole units of 1/8 ms

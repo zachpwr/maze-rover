@@ -2,6 +2,10 @@
 #include "rover.h"
 #include "motor.h"
 
+void initMotorDriver() {
+    MOTOR_PORT_DDR = (1 << PD0 | 1 << PD1 | 1 << PD2 | 1 << PD3);
+}
+
 // -- HIGH-LEVEL MOTOR I/O -- //
 void turn(int direction) {
     int leftDirection = (direction == LEFT_TURN) ? BACKWARD : FORWARD; // Dictates left/right turn depending on sign of input value

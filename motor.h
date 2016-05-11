@@ -1,6 +1,9 @@
 // Zachary Maniatis & Zachary Power
 #define F_CPU 1000000UL
 
+#define MOTOR_PORT_OUT PORTD
+#define MOTOR_PORT_DDR DDRD
+
 #define LEFT_MOTOR_MASK 0x03
 #define RIGHT_MOTOR_MASK 0x0C
 
@@ -13,6 +16,7 @@
 
 #define MOTOR_DELAY 10
 
+void initMotorDriver();
 void turn(int direction);
 void driveForward();
 int stop();

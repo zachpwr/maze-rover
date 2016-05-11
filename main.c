@@ -9,12 +9,11 @@
 
 int main() {
     init_QTR_driver();
-
-    DDRD = (1 << PD0 | 1 << PD1 | 1 << PD2 | 1 << PD3);
+    initMotorDriver();
 
     unsigned char firstState = getSensorData();
     solveMaze(firstState);
-    
+
     return 0;
 }
 
