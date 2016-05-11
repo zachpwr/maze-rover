@@ -1,11 +1,10 @@
 // Zachary Maniatis & Zachary Power
 #include <avr/io.h>
-#include <util/delay.h>
 #include "main.h"
-#include "rover.h"
 #include "sensor.h"
 #include "motor.h"
 #include "qtr_driver.h"
+#include <util/delay.h>
 
 int main() {
     init_QTR_driver();
