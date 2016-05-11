@@ -1,6 +1,4 @@
 // Zachary Maniatis & Zachary Power
-#define LEFT_ENCODER_MASK  0b00110000
-#define RIGHT_ENCODER_MASK 0b00000011
 #define LEFT_MOTOR_MASK    0b11000000
 #define RIGHT_MOTOR_MASK   0b00001100
 

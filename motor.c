@@ -3,7 +3,7 @@
 #include "motor.h"
 
 // -- HIGH-LEVEL MOTOR I/O -- //
-void drift(int direction) {
+void drift(int direction) {//Corrects the rover to the right/left depending on how it is drifting
     int leftDirection = (direction < 0) ? BREAK : FORWARD; // Dictates left/right turn depending on sign of input value
     int rightDirection = (direction < 0) ? FORWARD : BREAK;
 
@@ -30,7 +30,7 @@ void turn(int direction) {
     return;
 }
 
-void driveForward() {
+void driveForward() {//Makes rover drive Forward
     setRightMotor(FORWARD);
     setLeftMotor(FORWARD);
     _delay_ms(10);

@@ -16,17 +16,17 @@ int main(){
 void solveMaze(unsigned char previousState) {
     unsigned char currentState = getSensorData();
 
-    if(isLeftTurnAvailable(currentState) == 1) {
+    if(isLeftTurnAvailable(currentState) == 1) {//If a left turn is detected, take it
         turn(-1);
-    } else if(isOnPath(currentState) == 1) {
+    } else if(isOnPath(currentState) == 1) {//If no left turn is detected, keep driving.
         driveForward();
-    } else if(isRightTurnAvailable(currentState) == 1) {
+    } else if(isRightTurnAvailable(currentState) == 1) {//If no left turn is available, turn right
         turn(1);
-    } else if(isTooFarLeft(currentState) == 1) {
+    } else if(isTooFarLeft(currentState) == 1) {//If the rover is drifting to the left, center it
         drift(1);
-    } else if(isTooFarRight(currentState) == 1) {
+    } else if(isTooFarRight(currentState) == 1) {//If the rover is drifting to the right, center it
         drift(-1);
-    } else if(isOffOfPath(currentState) == 1) {
+    } else if(isOffOfPath(currentState) == 1) {//If the rover roams off the path, turn until it picks up the path
         turn(1);
     }
 
@@ -37,32 +37,32 @@ unsigned char getSensorData() {
     return get_QTR_value();
 }
 
-int isLeftTurnAvailable(unsigned char sensorData) {
+int isLeftTurnAvailable(unsigned char sensorData) {//Checks to see if a left turn is available
     return ((sensorData & 0xC0) >> 6) == 3;
 }
 
-int isRightTurnAvailable(unsigned char sensorData) {
+int isRightTurnAvailable(unsigned char sensorData) {//Checks to see if a right turn is available
     return (sensorData & 0x03) == 3;
 }
 
-int isOnPath(unsigned char sensorData) {
+int isOnPath(unsigned char sensorData) {//Checks to see if the rover is on the line
     return ((sensorData & 0x3C) >> 2) == 0x0F;
 }
 
-int isTooFarLeft(unsigned char sensorData) {
+int isTooFarLeft(unsigned char sensorData) {//Checks to see if the rover is drifting to the left
     return ((sensorData & 0x0F) << 4 | (sensorData & 0xF0) >> 4) > sensorData;
 }
 
-int isTooFarRight(unsigned char sensorData) {
+int isTooFarRight(unsigned char sensorData) {//Checks to see if the rover is drifting to the right
     return ((sensorData & 0x0F) << 4 | (sensorData & 0xF0) >> 4) < sensorData;
 }
 
-int isOffOfPath(unsigned char sensorData) {
+int isOffOfPath(unsigned char sensorData) {//Checks to see if the rover is on the path
     return sensorData == 0x00;
 }
 
 // -- HIGH-LEVEL MOTOR I/O -- //
-void drift(int direction) {
+void drift(int direction) {//Corrects the rover to the right/left depending on how it is drifting
     int leftDirection = (direction < 0) ? BREAK : FORWARD; // Dictates left/right turn depending on sign of input value
     int rightDirection = (direction < 0) ? FORWARD : BREAK;
 
@@ -89,7 +89,7 @@ void turn(int direction) {
     return;
 }
 
-void driveForward() {
+void driveForward() {//Makes the rover drive forward
     setRightMotor(FORWARD);
     setLeftMotor(FORWARD);
     _delay_ms(10);
