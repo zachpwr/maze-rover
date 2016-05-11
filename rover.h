@@ -1,3 +1,4 @@
+// Zachary Maniatis & Zachary Power
 #define F_CPU 1000000UL
 #define LEFT_PORT_OUT PORTC
 #define FORWARD      0b10
