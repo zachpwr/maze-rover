@@ -41,7 +41,7 @@ int setLeftMotor(int direction) { // Gives access to the left motor
     if(currentDirection == direction) return 0;
 
     MOTOR_PORT_OUT &= ~LEFT_MOTOR_MASK;
-    MOTOR_PORT_OUT |= direction << 6;
+    MOTOR_PORT_OUT |= direction;
 
     currentDirection = direction;
     return 1;
