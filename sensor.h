@@ -1,8 +1,9 @@
 // Zachary Maniatis & Zachary Power
+
+#define LEFT_SENSOR_MASK = 0x03;
+
 unsigned char getSensorData();
-int isLeftTurnAvailable(unsigned char sensorData);
-int isRightTurnAvailable(unsigned char sensorData);
-int isOnPath(unsigned char sensorData);
-int isTooFarLeft(unsigned char sensorData);
-int isTooFarRight(unsigned char sensorData);
-int isOffOfPath(unsigned char sensorData);
+int isAligned(unsigned char sensorData);
+int shouldGoLeft(unsigned char sensorData);
+int shouldGoRight(unsigned char sensorData);
+int getAlignmentSensorData(unsigned char sensorData);
