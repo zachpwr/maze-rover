@@ -1,6 +1,6 @@
 // Zachary Maniatis & Zachary Power
 
-#define LEFT_SENSOR_MASK = 0x03;
+#define LEFT_SENSOR_MASK 0x03
 
 unsigned char getSensorData();
 int isAligned(unsigned char sensorData);

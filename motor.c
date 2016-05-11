@@ -1,5 +1,4 @@
 // Zachary Maniatis & Zachary Power
-#include "rover.h"
 #include "motor.h"
 
 void initMotorDriver() {
@@ -8,8 +7,8 @@ void initMotorDriver() {
 
 // -- HIGH-LEVEL MOTOR I/O -- //
 void turn(int direction) {
-    int leftDirection = (direction == LEFT_TURN) ? BACKWARD : FORWARD; // Dictates left/right turn depending on sign of input value
-    int rightDirection = (direction == RIGHT_TURN) ? BACKWARD : FORWARD;
+    int leftDirection = (direction == TURN_LEFT) ? BACKWARD : FORWARD; // Dictates left/right turn depending on sign of input value
+    int rightDirection = (direction == TURN_RIGHT) ? BACKWARD : FORWARD;
 
     setRightMotor(rightDirection);
     setLeftMotor(leftDirection);
@@ -33,6 +32,7 @@ int stop() {//Makes rover stop moving
     setRightMotor(BREAK);
 
     _delay_ms(MOTOR_DELAY);
+    return 1;
 }
 
 // -- LOW-LEVEL MOTOR I/O -- //

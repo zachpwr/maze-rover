@@ -20,7 +20,7 @@ int main() {
 void solveMaze(unsigned char previousState) {
     unsigned char currentState = getSensorData();
 
-    if(isOnPath(currentState)) {
+    if(isAligned(currentState)) {
         driveForward();
     } else if(shouldGoLeft(currentState)) {
         turn(TURN_LEFT);
