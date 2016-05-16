@@ -14,5 +14,3 @@ int shouldGoLeft(unsigned char sensorData);
 int shouldGoRight(unsigned char sensorData);
 int getLeftAlignment(unsigned char sensorData);
 int getRightAlignment(unsigned char sensorData);
-
-#include "sensor.c"
