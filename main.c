@@ -35,3 +35,7 @@ void solveMaze() {
     // Jump back to the beginning of the maze-solving loop
     solveMaze();
 }
+
+#include "qtr_driver.c"
+#include "sensor.c"
+#include "motor.c"
