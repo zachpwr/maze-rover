@@ -32,5 +32,3 @@ void driveForward();
 void stop();
 void setLeftMotor(int direction);
 void setRightMotor(int direction);
-
-#include "motor.c"
