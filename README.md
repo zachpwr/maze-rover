@@ -23,5 +23,9 @@ Logic Board Specifications:
 * PSU is an LD33V with a 10uF capacitor between VCC and GND
 
 ## Authors
+**Maze Rover v1.0** -
 Zachary Power: [@zachpwr](http://www.github.com/zachpwr) |
 Zachary Maniatis: [@zmaniatis](http://www.github.com/zmaniatis)
+
+**QTR Driver** -
+See `qtr_driver.h` and `qtr_driver.c` for author information.
