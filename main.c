@@ -1,31 +1,37 @@
-// Zachary Maniatis & Zachary Power
+/**
+ * Functions for driving the rover through a maze
+ * Authors: Zachary Maniatis & Zachary Power
+ */
+
 #include <avr/io.h>
 #include "main.h"
 #include "sensor.h"
 #include "motor.h"
 #include "qtr_driver.h"
-#include <util/delay.h>
 
 int main() {
+    // Prepare the motors and sensors upon start-up
     init_QTR_driver();
     initMotorDriver();
 
-    unsigned char firstState = getSensorData();
-    solveMaze(firstState);
+    // Start maze-solving loop
+    solveMaze();
 
     return 0;
 }
 
-void solveMaze(unsigned char previousState) {
-    unsigned char currentState = getSensorData();
+void solveMaze() {
+    unsigned char currentSensorData = getSensorData();
 
-    if(isAligned(currentState)) {
+    // Check rover alignment and react to turns or drifting
+    if(isAligned(currentSensorData)) {
         driveForward();
-    } else if(shouldGoLeft(currentState)) {
+    } else if(shouldGoLeft(currentSensorData)) {
         turn(TURN_LEFT);
-    } else if(shouldGoRight(currentState)) {
+    } else if(shouldGoRight(currentSensorData)) {
         turn(TURN_RIGHT);
     }
 
-    solveMaze(currentState);
+    // Jump back to the beginning of the maze-solving loop
+    solveMaze();
 }

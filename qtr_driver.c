@@ -7,7 +7,7 @@
 
 unsigned char QTR_ARRAY_VALUE; //variable holding current QTR sensor state
 
-//returns the current state of the QTR array 
+//returns the current state of the QTR array
 unsigned char get_QTR_value()
 {
 	return QTR_ARRAY_VALUE;
